@@ -65,7 +65,7 @@ const Topbar = props => {
               style={{color:"white"}}
               href="/events"
             >
-                  Lewis
+                  Events
             </Button>
             <Button
               className="nav-join-button"
