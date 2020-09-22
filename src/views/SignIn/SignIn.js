@@ -223,7 +223,7 @@ const SignIn = props => {
         >
           <div className={classes.content}>
             <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
+              <IconButton onClick={handleBack} style={{paddingLeft: "0px", marginTop: "15px"}}  >
                 <ArrowBackIcon />
               </IconButton>
             </div>

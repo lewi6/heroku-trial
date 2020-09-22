@@ -3,9 +3,14 @@ import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/styles';
-import { AppBar, Toolbar ,Button, IconButton, Drawer} from '@material-ui/core';
-import {Menu} from '@material-ui/icons'
+import { AppBar, Toolbar ,Button, IconButton, Drawer, Menu} from '@material-ui/core';
+import { AccountCircle} from '@material-ui/icons'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Typography } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,8 +29,28 @@ const Topbar = props => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  // console.log(isMobile);
+  // menu things
+  const [auth, setAuth] = React.useState(true);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const topen = Boolean(anchorEl);
+
+  const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
   return (
+  
+    
     <AppBar
       {...rest}
       className={clsx(classes.root, className)}
@@ -36,7 +61,7 @@ const Topbar = props => {
         {isMobile ? (
           <>
             <IconButton style={{paddingLeft:"0px"}} onClick={handleDrawer} color="inherit" edge="static" arial-label="menu">
-              <Menu />  
+              <MenuIcon />  
             </IconButton>
             <RouterLink to="/">
             <img
@@ -44,6 +69,30 @@ const Topbar = props => {
               src="/images/logo.png"
             />
             </RouterLink>
+            <IconButton style={{paddingLeft:"10px",fontSize:"large"}} color="inherit" edge="static" aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}>
+              <AccountCircle />  
+            </IconButton>
+            <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                topen={topen}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+              </Menu>
           </>
         ) : (
           <>
@@ -73,7 +122,17 @@ const Topbar = props => {
               href="/contact"
             >
                   Contact us
-        </Button>
+            </Button>
+            
+            <Typography type="title" color="inherit" style={{flex: 1 }}>
+              
+            </Typography>
+            <div>
+              <Button raised color="accent" style={{color:"white"}} href="/sign-in">
+              
+                Login
+              </Button>
+            </div>
         </>       
           )
         }
